@@ -56,9 +56,11 @@ const CreateNew = (props) => {
 	const [content, setContent] = useState('')
 	const [author, setAuthor] = useState('')
 	const [info, setInfo] = useState('')
+    const [redirectToHome, setRedirectToHome] = useState(false)
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
+        setRedirectToHome(true)
 		props.addNew({content, author, info, votes: 0})
 	}
 
@@ -79,6 +81,7 @@ const CreateNew = (props) => {
 			</div>
 			<button>create</button>
 		</form>
+        {redirectToHome ? <Redirect to='/' /> : ''}
 	</div>)
 
 }
@@ -123,31 +126,33 @@ const App = () => {
 			: a))
 	}
 
-	return (<div>
-		<h1>Software anecdotes</h1>
-        <Router>
-            <div>
-                <Menu/>
-                <Route
-                    exact path='/'
-                    render={() => <AnecdoteList anecdotes={anecdotes}/>}
-                />
-                <Route
-                    exact path='/anecdotes/:id'
-                    render={({match}) => <Anecdote anecdote={anecdoteById(match.params.id)}/>}
-                />
-        		<Route
-                    path='/create'
-                    render={() => <CreateNew addNew={addNew}/>}
-                />
-                <Route
-                    path='/about'
-                    render={() => <About/>}
-                />
-            </div>
-        </Router>
-		<Footer/>
-	</div>)
+	return (
+        <div>
+    		<h1>Software anecdotes</h1>
+            <Router>
+                <div>
+                    <Menu/>
+                    <Route
+                        exact path='/'
+                        render={() => <AnecdoteList anecdotes={anecdotes}/>}
+                    />
+                    <Route
+                        exact path='/anecdotes/:id'
+                        render={({match}) => <Anecdote anecdote={anecdoteById(match.params.id)}/>}
+                    />
+            		<Route
+                        path='/create'
+                        render={() => <CreateNew addNew={addNew}/>}
+                    />
+                    <Route
+                        path='/about'
+                        render={() => <About/>}
+                    />
+                </div>
+            </Router>
+    		<Footer/>
+    	</div>
+    )
 }
 
 export default App;
