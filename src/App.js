@@ -108,6 +108,7 @@ const App = () => {
 	const addNew = (anecdote) => {
 		anecdote.id = (Math.random() * 10000).toFixed(0)
 		setAnecdotes(anecdotes.concat(anecdote))
+        setNotification(`a new anecdote ${anecdote.content} created!`)
 	}
 
 	const anecdoteById = (id) => anecdotes.find(a => a.id === id)
@@ -132,6 +133,7 @@ const App = () => {
             <Router>
                 <div>
                     <Menu/>
+                    {notification}
                     <Route
                         exact path='/'
                         render={() => <AnecdoteList anecdotes={anecdotes}/>}
